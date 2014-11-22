@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inventory: 1
+  pappy: false
+  pappyType: MyString
+
+two:
+  inventory: 1
+  pappy: false
+  pappyType: MyString
