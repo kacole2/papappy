@@ -6,6 +6,4 @@ require 'clockwork'
 
 include Clockwork
 
-every(30.seconds, 'Searching for Pappy...') { 
-	Heroku::API.new.post_ps('papappy', 'rake scrape:runScrape')
-}
+every(30.seconds, 'Queueing interval job') { Delayed::Job.enqueue 'rake scrape:runScrape' }
