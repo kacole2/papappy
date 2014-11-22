@@ -6,4 +6,4 @@ require 'clockwork'
 
 include Clockwork
 
-every(30.seconds, 'Queueing interval job') { 'runScrape' }
+every(30.seconds, 'Searching for Pappy...') { 'rake runScrape' }
