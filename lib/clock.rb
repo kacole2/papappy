@@ -3,8 +3,10 @@ require File.expand_path('../../config/environment', __FILE__)
 require './config/boot'
 require './config/environment'
 require 'clockwork'
-require 'rake'
+require 'Rake'
 require 'rake/dsl_definition'
 include Clockwork
+
+Rails.application.load_tasks
 
 every(30.seconds, 'Searching for Pappy...') { Rake::Task['runScrape'].invoke }
