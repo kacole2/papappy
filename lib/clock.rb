@@ -3,7 +3,6 @@ require File.expand_path('../../config/environment', __FILE__)
 require './config/boot'
 require './config/environment'
 require 'clockwork'
-require 'Rake'
 require 'rake/dsl_definition'
 include Clockwork
 
