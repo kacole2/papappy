@@ -6,4 +6,4 @@ require 'clockwork'
 
 include Clockwork
 
-every(30.seconds, 'Queueing interval job') { Delayed::Job.enqueue 'rake scrape:runScrape' }
+every(30.seconds, 'Queueing interval job') { 'rake scrape:runScrape' }
