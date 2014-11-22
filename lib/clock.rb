@@ -8,4 +8,4 @@ include Clockwork
 
 Rails.application.load_tasks
 
-every(30.seconds, 'Searching for Pappy...') { Rake::Task['runScrape'].invoke }
+every(30.seconds, 'Searching for Pappy...') { "rake runScrape" }
