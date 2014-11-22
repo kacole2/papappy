@@ -5,10 +5,7 @@ require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
-namespace :scrape do
-
-  desc "Finding Pappy..."
-  task :runScrape do
+task :runScrape => :environment do
   	pappysite = SiteDatum.find(1)
 
   	puts pappysite.inventory
@@ -56,6 +53,4 @@ namespace :scrape do
         pappysite.pappy = false
         pappysite.save
       end
-  end
-
 end

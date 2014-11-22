@@ -6,4 +6,4 @@ require 'clockwork'
 
 include Clockwork
 
-every(30.seconds, 'Queueing interval job') { 'scrape:runScrape' }
+every(30.seconds, 'Queueing interval job') { 'runScrape' }
