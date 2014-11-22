@@ -30,7 +30,7 @@ class SiteDatum < ActiveRecord::Base
 	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
 	      end
 
-	      if pappy == strue
+	      if pappy == true
 	        puts "There's PAPPY!"
 	        pappysite.pappy = true
 	        pappysite.save
