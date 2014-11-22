@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+pappysite = SiteDatum.create(:inventory => 12, :pappy => true, :pappyType => "")
+puts "creating the site entry"
