@@ -4,4 +4,4 @@ require 'clockwork'
 
 include Clockwork
 
-every(30.seconds, 'Searching for Pappy...') { SiteDatum.runScrape }
+every(30.seconds, 'Searching for Pappy...') { rake scrape:runScrape }
