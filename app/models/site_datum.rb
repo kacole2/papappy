@@ -10,7 +10,9 @@ class SiteDatum < ActiveRecord::Base
 	    
 	    puts inventory
 
-	    pappy = page.body.include?('Winkle')
+	    pappyArray = ['Winkle', 'Pappy', 'Van']
+
+	    pappy = pappyArray.any? { |keyword| page.body.include? keyword }
 
 	      if inventory == pappysite.inventory
 	        puts "No Changes"
