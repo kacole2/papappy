@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
    root :to => "site_data#show", :id => '1'
    post 'site_data/runScrape' => 'site_data#runScrape', as: :runScrape
-   match '/', to: "site_data#show", id: '1', via: 'get', as: :home
+   #match '/', to: "site_data#show", id: '1', via: 'get', as: :home
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
