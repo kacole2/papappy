@@ -50,10 +50,11 @@ class SiteDatum < ActiveRecord::Base
 
 	        # Deliver a simple mesage.
 	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
-	        #sleep(20.seconds)
+	        sleep(29.seconds)
 	        easy.deliver(ENV["BOBBY_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 	        easy.deliver(ENV["STEVE_NUMBER"],"verizon","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 	        easy.deliver(ENV["SCOTT_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["STEVE2_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 	      else
 	        puts "No Pappy :("
 	        pappysite.pappy = false
