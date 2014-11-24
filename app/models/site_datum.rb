@@ -30,7 +30,11 @@ class SiteDatum < ActiveRecord::Base
 	        easy = SMSEasy::Client.new
 
 	        # Deliver a simple message.
-	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
+	        sleep(20.seconds)
+	        easy.deliver(ENV["BOBBY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["STEVE_NUMBER"],"verizon","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["SCOTT_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
 	      end
 
 	      if pappy == true
@@ -46,6 +50,10 @@ class SiteDatum < ActiveRecord::Base
 
 	        # Deliver a simple mesage.
 	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
+	        sleep(20.seconds)
+	        easy.deliver(ENV["BOBBY_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["STEVE_NUMBER"],"verizon","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["SCOTT_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 	      else
 	        puts "No Pappy :("
 	        pappysite.pappy = false
