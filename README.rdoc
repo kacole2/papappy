@@ -1,6 +1,7 @@
 ==README
 
 # PAPappy
+-------------
 
 
 
@@ -19,5 +20,7 @@ Things you need to know:
 * Use the seed.rb file to seed the database for the first time.
 
 
-More information can be found on ["Creating a worker process" on kendrickcoleman.com](http://kendrickcoleman.com/index.php/Tech-Blog/creating-a-worker-process-on-cloud-foundry-with-clockwork.html)
+More information can be found on ["Creating a worker process" on kendrickcoleman.com][1]
+
+[1]: http://kendrickcoleman.com/index.php/Tech-Blog/creating-a-worker-process-on-cloud-foundry-with-clockwork.html
 
