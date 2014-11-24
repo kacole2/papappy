@@ -1,0 +1,17 @@
+---
+applications:
+- name: papappy
+  memory: 1024M
+  instances: 1
+  path: .
+  domain: cfapps.io
+  command: bundle exec rake db:create db:migrate db:seed && bundle exec rails s -p $PORT
+  services:
+  - kcoleman-papappy-elephant
+- name: papappycron
+  memory: 512MB
+  instances: 1
+  path: .
+  command: bundle exec clockwork lib/clock.rb
+  services:
+  - kcoleman-papappy-elephant
