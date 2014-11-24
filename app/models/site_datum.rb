@@ -8,7 +8,7 @@ class SiteDatum < ActiveRecord::Base
 	    
 	    inventory = page.at('.tabSelected_blue').text.strip.tr('AvailableOnline)(','').to_i
 	    
-	    puts "the saved inventory is" + pappysite.inventory
+	    puts "the saved inventory is" + pappysite.inventory.to_s
 
 	    pappyArray = ['Winkle', 'Pappy', 'Van']
 
@@ -21,7 +21,7 @@ class SiteDatum < ActiveRecord::Base
 	      else
 	        pappysite.inventory = inventory
 	        pappysite.save
-	        puts "There's a change! There are now " + pappysite.inventory + " items listed"
+	        puts "There's a change! There are now " + pappysite.inventory.to_s + " items listed"
 
 	        # Override the default "from" address with config/initializers/sms-easy.rb
 	        SMSEasy::Client.config['from_address'] = "PAPappy"
