@@ -6,7 +6,7 @@ h1 {
 }
 
 body {
-  margin-top: 10%;
+  margin-top: 5%;
   background-color: #ffefd1;
   color: #333;
   font-size: 13px;
@@ -19,6 +19,18 @@ p, ol, ul, td {
   font-size: 2em;
   line-height: 18px;
   margin: 0;
+}
+
+.name {
+  font-size: 1em;
+}
+
+.name a {
+  text-decoration: none;
+}
+
+.name a:hover {
+  text-decoration: underline;
 }
 
 #content-wrapper {
@@ -53,13 +65,12 @@ pre {
 }
 
 a {
-  color: #000;
+  color: #666;
   &:visited {
     color: #666;
   }
   &:hover {
-    color: #fff;
-    background-color: #000;
+    color: #000;
   }
 }
 
