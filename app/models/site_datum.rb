@@ -30,7 +30,7 @@ class SiteDatum < ActiveRecord::Base
 	        easy = SMSEasy::Client.new
 
 	        # Deliver a simple message.
-	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
+	        #easy.deliver(ENV["KENNY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
 	        #sleep(20.seconds)
 	        #easy.deliver(ENV["BOBBY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
 	        #easy.deliver(ENV["STEVE_NUMBER"],"verizon","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
