@@ -9,10 +9,8 @@ This is a rails project that will scrape the PA liquor website for the word "Pap
 Things you need to know:
 
 * 2 Components:
-<ul>
-<li> Web Front End that is dictated by the first id: 1 </li>
-<li> A task worker by 'clockwork' that does a reoccuring scrape every 30 seconds </li>
-</ul>
+  - Web Front End that is dictated by the first id: 1
+  - A task worker by 'clockwork' that does a reoccuring scrape every 30 seconds
 
 * The current code is deployed on Cloud Foundry. If you want to deploy on Heroku, it will require the use of a Procfile and using the same command that is in the manifest.yml file
 
