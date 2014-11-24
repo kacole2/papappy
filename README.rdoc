@@ -1,6 +1,6 @@
 ==README
 
-##PAPappy
+# The largest heading (an <h1> tag)
 
 This is a rails project that will scrape the PA liquor website for the word "Pappy" "Van" & "Winkle". It will notify you via SMS if that word is found. There is also some disabled code that can notify you on online inventory changes. However, that doesn't work well because the use of load balancers may fire off a flurry of SMS messages.
 
