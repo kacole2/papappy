@@ -8,7 +8,7 @@ class SiteDatum < ActiveRecord::Base
 	    
 	    inventory = page.at('.tabSelected_blue').text.strip.tr('AvailableOnline)(','').to_i
 	    
-	    puts "the saved inventory is" + pappysite.inventory.to_s
+	    puts "the saved inventory is " + pappysite.inventory.to_s
 
 	    pappyArray = ['Winkle', 'Pappy', 'Van']
 
