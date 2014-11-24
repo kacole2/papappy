@@ -24,13 +24,13 @@ class SiteDatum < ActiveRecord::Base
 	        pappysite.save
 
 	        # Override the default "from" address with config/initializers/sms-easy.rb
-	        #SMSEasy::Client.config['from_address'] = "PAPappy"
+	        SMSEasy::Client.config['from_address'] = "PAPappy"
 
 	        # Create the client
-	        #easy = SMSEasy::Client.new
+	        easy = SMSEasy::Client.new
 
 	        # Deliver a simple message.
-	        #easy.deliver(ENV["KENNY_NUMBER"],"at&t","There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
+	        easy.deliver(ENV["KENNY_NUMBER"],"at&t","There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
 	      end
 
 	      if pappy == true
