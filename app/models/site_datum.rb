@@ -14,7 +14,7 @@ class SiteDatum < ActiveRecord::Base
 
 	    current_time = Time.now.in_time_zone("Eastern Time (US & Canada)")
 
-	    if current_time.hour.between?(0, 25) 
+	    if current_time.hour.between?(7, 13) 
 	    	puts "it's " + current_time.strftime("%H:%M").to_s + ", lets scrape!"
 	    	
 		    if inventory == pappysite.inventory
@@ -64,7 +64,7 @@ class SiteDatum < ActiveRecord::Base
 
 		        	if pappysite.ordersubmitted == false
 			        	#Start the automated ordering process
-			        	def self.order_liquor(userlogin, userpassword, userphone)
+			        	def self.order_liquor(userlogin, userpassword, kryptocarturl, userphone)
 				        	agent1 = Mechanize.new
 				        	agent1.user_agent_alias = 'Mac Safari'
 			    			login_page = agent1.get('https://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/LogonForm?langId=-1&storeId=10051&catalogId=null')
@@ -79,7 +79,7 @@ class SiteDatum < ActiveRecord::Base
 							bourbon_list = agent1.get('https://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/SpiritsCatalogSearchResultView?tabSel=1&sortBy=Name&sortDir=ASC&storeId=10051&catalogId=10051&langId=-1&parent_category_rn=Spirits&newsearchlist=no&resetValue=0&searchType=Spirits&minSize=&maxSize=&promotions=&rating=&vintage=&specificType=&price=0&maxPrice=0&varitalCatIf=&region=&country=&varietal=&listSize=45&searchKey=&pageNum=1&totPages=1&level0=Spirits&level1=S_Bourbon&level2=&level3=&keyWordNew=false&VId=&TId=&CId=&RId=&PRc=&FPId=&TRId=&ProId=&isKeySearch=&SearchKeyWord=Name+or+Code')
 
 							bourbon_list_array = bourbon_list.search("//table[@id='productList']")
-							puts bourbon_list_array.length
+
 							bourbon_list_array.each_with_index do |list_item, index|
 								if list_item.content.include? "10849"
 									bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
@@ -101,34 +101,39 @@ class SiteDatum < ActiveRecord::Base
 									bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
 									bourbon_form.action = "OrderItemAdd"
 									results_page = bourbon_form.submit
+								elsif list_item.content.include? "Pappy Van Winkle’s"
+									bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
+									bourbon_form.action = "OrderItemAdd"
+									results_page = bourbon_form.submit
+								elsif list_item.content.include? "Van Winkle Special Reserve"
+									bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
+									bourbon_form.action = "OrderItemAdd"
+									results_page = bourbon_form.submit
+								#elsif list_item.content.include? "Booker's Bourbon"
+								#	puts "I got added by title"
+								#	bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
+								#	bourbon_form.action = "OrderItemAdd"
+								#	results_page = bourbon_form.submit
 								#elsif list_item.content.include? "6917"
+								#	puts "I got added by code number"
 								#	bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
 								#	bourbon_form.action = "OrderItemAdd"
 								#	results_page = bourbon_form.submit
 								end
 							end
 
-							submit_page = agent1.get('https://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/QuickCheckoutSummaryView?catalogId=10051&langId=-1&storeId=10051&krypto=zK418NznYEPoMvLcvz1aFNW3LneGyM7cepiU0XsOknZ4UtMpTPOd32g3itLm1e7fev5vyTJK%2BAOe%0AWxUSHHNSJnpkJrz5owOxamXihn4Y6Vzhy1T8W579WQ%3D%3D&ddkey=https:OrderItemUpdate')
-							#checkOut_form = checkout_page.form_with(:name => 'ShopCartForm')
-							#quickcheckOut_button = checkOut_form.button_with(:id => 'quickcheckOut')
-							#billing_info_page = agent1.submit(checkOut_form, quickcheckOut_button)
-							
-							#billing_info_form = billing_info_page.form_with(:name => 'CheckoutBillingInfo')
-							#billing_into_next_button = billing_info_form.button_with(:id => 'nextButton')
-							#gift_info_page = agent1.submit(billing_info_form, billing_into_next_button)
+							submit_page = agent1.get(kryptocarturl)
 
-							#puts submit_page.body
 							#submit_form = submit_page.form_with(:name => 'CardInfo')
+							#submit_form.action = "Handle_Submit"
 							#submit_button = submit_form.button_with(:id => 'submitOrder')
 
 							#order submition
-							#submit_link = submit_page.link_with(:id => "submitOrder")
-							#done_page = submit_link.click
-							#done_page = submit_form.submit(submit_button)
+							#done_page = agent1.submit(submit_form, submit_button)
 							#puts done_page.body
 
-							#logout_link = done_page.link_with(id: 'headerLoginAnchorId')
-							#logged_out_page = logout_link.click
+							logout_link = submit_page.link_with(id: 'headerLoginAnchorId')
+							logged_out_page = logout_link.click
 
 							puts "Pappy Order for " + userlogin.to_s + " is submitted!"
 
@@ -141,8 +146,10 @@ class SiteDatum < ActiveRecord::Base
 						kenny_login_2 = ENV["KENNY_ACCOUNT2_EMAIL"]
 						kenny_pw = ENV["KENNY_ACCOUNT1_PW"]
 						kenny_phone = ENV["KENNY_NUMBER"]
+						kenny_krypto_cart_1 = ENV["KENNY_ACCOUNT1_KRYPTOCART"]
+						kenny_krypto_cart_2 = ENV["KENNY_ACCOUNT2_KRYPTOCART"]
 
-						order_liquor(kenny_login_1, kenny_pw, kenny_phone)
+						order_liquor(kenny_login_1, kenny_pw, kenny_krypto_cart_1, kenny_phone)
 						order_liquor(kenny_login_2, kenny_pw, kenny_phone)
 
 						pappysite.ordersubmitted = true
