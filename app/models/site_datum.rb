@@ -14,7 +14,7 @@ class SiteDatum < ActiveRecord::Base
 
 	    current_time = Time.now.in_time_zone("Eastern Time (US & Canada)")
 
-	    if current_time.hour.between?(7, 24) 
+	    if current_time.hour.between?(7, 13) 
 	    	puts "it's " + current_time.strftime("%H:%M").to_s + ", lets scrape!"
 	    	
 		    if inventory == pappysite.inventory
