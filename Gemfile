@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'watir-webdriver'
 gem 'mechanize'
 gem 'nokogiri'
 gem 'sms-easy'
