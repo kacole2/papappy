@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'mechanize'
+gem 'nokogiri'
 gem 'sms-easy'
 gem 'figaro'
 gem 'rails_12factor'
