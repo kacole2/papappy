@@ -31,6 +31,8 @@ class SiteDatum < ActiveRecord::Base
 				#If it's not found on the first site, check the page where Winkle is the keyword search and
 				#set variables accordingly
 				if pappy == false
+					#sleep a bit so we aren't scrapping rapidly
+					sleep(12)
 					page = mechanize.get('http' + winklesearch)
 					pappy = pappyArray.any? { |keyword| page.parser.css('.s_leftContainer').text.include? keyword }
 					searchsite = winklesearch
