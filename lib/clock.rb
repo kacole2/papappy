@@ -6,4 +6,4 @@ require 'clockwork'
 
 include Clockwork
 
-every(30.seconds, 'Searching for Pappy...') { SiteDatum.scrape }
+every(20.seconds, 'Searching for Pappy...') { SiteDatum.scrape }

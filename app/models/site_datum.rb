@@ -19,26 +19,30 @@ class SiteDatum < ActiveRecord::Base
 		        puts "There's PAPPY!"
 		   
 		        	if pappysite.textsent == false
+		        		#Save the change in the database before clockwork runs again
+		        		pappysite.textsent = true
+						pappysite.save
+
 		        		# Override the default "from" address with config/initializers/sms-easy.rb
 				        SMSEasy::Client.config['from_address'] = "PAPappy"
 				        # Create the client
 				        easy = SMSEasy::Client.new
 
-				        # Deliver a simple mesage.
+				        # Deliver the texts to everyone
 				        easy.deliver(ENV["KENNY_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
-				        #sleep(29.seconds)
 				        easy.deliver(ENV["BOBBY_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 				        easy.deliver(ENV["STEVE_NUMBER"],"verizon","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 				        easy.deliver(ENV["SCOTT_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 				        easy.deliver(ENV["STEVE2_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 				        easy.deliver(ENV["JASON_NUMBER"],"at&t","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
 				        easy.deliver(ENV["JASON2_NUMBER"],"verizon","Pappy Time! Go here -> http://bit.ly/1vxVWJL")
-
-				        pappysite.textsent = true
-						pappysite.save
 					end
 
 		        	if pappysite.ordersubmitted == false
+		        		#Save the changes before the clockwork process starts over again.
+		        		pappysite.ordersubmitted = true
+						pappysite.save
+
 			        	#Start the automated ordering process
 			        	def self.order_liquor(userlogin, userpassword, userphone)
 
@@ -133,14 +137,11 @@ class SiteDatum < ActiveRecord::Base
 
 						order_liquor(kenny_login_1, kenny_pw, kenny_phone)
 						order_liquor(kenny_login_2, kenny_pw, kenny_phone)
-
-						pappysite.ordersubmitted = true
-						pappysite.save
 					end
 
 				pappysite.pappy = true
 		        pappysite.save
-		        
+
 		    else
 		        puts "No Pappy :("
 		        pappysite.pappy = false
@@ -155,15 +156,6 @@ class SiteDatum < ActiveRecord::Base
 		        pappysite.inventory = inventory
 		        pappysite.save
 		        puts "There's a change! There are now " + pappysite.inventory.to_s + " items listed"
-
-		        #SMSEasy::Client.config['from_address'] = "PAPappy"
-		        #easy = SMSEasy::Client.new
-		        # Deliver a simple message.
-		        #easy.deliver(ENV["KENNY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
-		        #sleep(20.seconds)
-		        #easy.deliver(ENV["BOBBY_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
-		        #easy.deliver(ENV["STEVE_NUMBER"],"verizon","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
-		        #easy.deliver(ENV["SCOTT_NUMBER"],"at&t","Inventory Change! There are now " + inventory.to_s + " items available. http://bit.ly/1vxVWJL")
 		    end
 
 	    else
