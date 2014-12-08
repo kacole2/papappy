@@ -4,19 +4,40 @@ class SiteDatum < ActiveRecord::Base
 	    current_time = Time.now.in_time_zone("Eastern Time (US & Canada)")
 
 	    if current_time.hour.between?(7, 13) 
-	    	puts "it's " + current_time.strftime("%H:%M").to_s + ", lets scrape!"
+	    	STDOUT.write "it's " + current_time.strftime("%H:%M").to_s + ", lets scrape!\n"
 
+	    	#Two possible places it may show up
+	    	allbourbon = '://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/SpiritsCatalogSearchResultView?tabSel=1&sortBy=Name&sortDir=ASC&storeId=10051&catalogId=10051&langId=-1&parent_category_rn=Spirits&newsearchlist=no&resetValue=0&searchType=Spirits&minSize=&maxSize=&promotions=&rating=&vintage=&specificType=&price=0&maxPrice=0&varitalCatIf=&region=&country=&varietal=&listSize=45&searchKey=&pageNum=1&totPages=1&level0=Spirits&level1=S_Bourbon&level2=&level3=&keyWordNew=false&VId=&TId=&CId=&RId=&PRc=&FPId=&TRId=&ProId=&isKeySearch=&SearchKeyWord=Name+or+Code'
+	    	winklesearch = '://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/SpiritsCatalogSearchResultView?tabSel=1&sortBy=Name&sortDir=ASC&storeId=10051&catalogId=10051&langId=-1&parent_category_rn=Wines+by+Variety&newsearchlist=yes&resetValue=&searchType=SPIRITS&minSize=&maxSize=&promotions=&rating=&vintage=&specificType=&price=&maxPrice=0&varitalCatIf=&region=&country=&varietal=&listSize=&searchKey=Winkle&pageNum=1&totPages=1&level0=&level1=&level2=&level3=&keyWordNew=true&VId=&TId=&CId=&RId=&PRc=&FPId=&TRId=&ProId=&isKeySearch=Y&SearchKeyWord=Winkle'
+
+	    	#Select the Active Record entry for saving data
 	    	pappysite = SiteDatum.find(1)
-	  	
+	  		
+	  		#grab the first possible place where all bourbons online are found
 	    	mechanize = Mechanize.new
-	    	page = mechanize.get('http://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/SpiritsCatalogSearchResultView?tabSel=1&sortBy=Name&sortDir=ASC&storeId=10051&catalogId=10051&langId=-1&parent_category_rn=Spirits&newsearchlist=no&resetValue=0&searchType=Spirits&minSize=&maxSize=&promotions=&rating=&vintage=&specificType=&price=0&maxPrice=0&varitalCatIf=&region=&country=&varietal=&listSize=45&searchKey=&pageNum=1&totPages=1&level0=Spirits&level1=S_Bourbon&level2=&level3=&keyWordNew=false&VId=&TId=&CId=&RId=&PRc=&FPId=&TRId=&ProId=&isKeySearch=&SearchKeyWord=Name+or+Code')
+	    	mechanize.user_agent_alias = 'Mac Safari'
+	    	page = mechanize.get('http' + allbourbon)
+
+	    	#Get the inventory number
 			inventory = page.at('.tabSelected_blue').text.strip.tr('AvailableOnline)(','').to_i
-	    
+	    	
+	    	#The keywords to be searched on the page
 			pappyArray = ['Winkle', 'Pappy', 'Van']
-			pappy = pappyArray.any? { |keyword| page.body.include? keyword }
+
+			#If one of those keywords is found, pappy variable will be true & save the search site to allbourbon
+			pappy = pappyArray.any? { |keyword| page.parser.css('.s_leftContainer').text.include? keyword }
+
+			searchsite = allbourbon
+				#If it's not found on the first site, check the page where Winkle is the keyword search and
+				#set variables accordingly
+				if pappy == false
+					page = mechanize.get('http' + winklesearch)
+					pappy = pappyArray.any? { |keyword| page.parser.css('.s_leftContainer').text.include? keyword }
+					searchsite = winklesearch
+				end
 
 		    if pappy == true
-		        puts "There's PAPPY!"
+		        STDOUT.write "There's PAPPY!\n"
 		   
 		        	if pappysite.textsent == false
 		        		#Save the change in the database before clockwork runs again
@@ -44,7 +65,7 @@ class SiteDatum < ActiveRecord::Base
 						pappysite.save
 
 			        	#Start the automated ordering process
-			        	def self.order_liquor(userlogin, userpassword, userphone)
+			        	def self.order_liquor(userlogin, userpassword, userphone, searchsite)
 
 			        		#Use Mechanize to quickly scrape and put items in the cart.
 			        		#If this was done with Watir it would have to perform a "back" function
@@ -61,7 +82,7 @@ class SiteDatum < ActiveRecord::Base
 							loggedin_page = login_form.submit(login_button)
 							
 							#Get the list of all the bourbons and search for keywords and add them to the cart
-							bourbon_list = agent1.get('https://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/SpiritsCatalogSearchResultView?tabSel=1&sortBy=Name&sortDir=ASC&storeId=10051&catalogId=10051&langId=-1&parent_category_rn=Spirits&newsearchlist=no&resetValue=0&searchType=Spirits&minSize=&maxSize=&promotions=&rating=&vintage=&specificType=&price=0&maxPrice=0&varitalCatIf=&region=&country=&varietal=&listSize=45&searchKey=&pageNum=1&totPages=1&level0=Spirits&level1=S_Bourbon&level2=&level3=&keyWordNew=false&VId=&TId=&CId=&RId=&PRc=&FPId=&TRId=&ProId=&isKeySearch=&SearchKeyWord=Name+or+Code')
+							bourbon_list = agent1.get('https' + searchsite)
 							bourbon_list_array = bourbon_list.search("//table[@id='productList']")
 							bourbon_list_array.each_with_index do |list_item, index|
 								if list_item.content.include? "10849"
@@ -123,7 +144,7 @@ class SiteDatum < ActiveRecord::Base
 							Watir::Wait.until { browser.title == "Fine Wine & Good Spirits: Order Confirmation" }
 							browser.link(:id => 'headerLoginAnchorId').click
 
-							puts "Pappy Order for " + userlogin.to_s + " is submitted!"
+							STDOUT.write "Pappy Order for " + userlogin.to_s + " is submitted!\n"
 
 							SMSEasy::Client.config['from_address'] = "PAPappy"
 							ordercomplete_text = SMSEasy::Client.new
@@ -135,31 +156,31 @@ class SiteDatum < ActiveRecord::Base
 						kenny_pw = ENV["KENNY_ACCOUNT1_PW"]
 						kenny_phone = ENV["KENNY_NUMBER"]
 
-						order_liquor(kenny_login_1, kenny_pw, kenny_phone)
-						order_liquor(kenny_login_2, kenny_pw, kenny_phone)
+						order_liquor(kenny_login_1, kenny_pw, kenny_phone, searchsite)
+						order_liquor(kenny_login_2, kenny_pw, kenny_phone, searchsite)
 					end
 
 				pappysite.pappy = true
 		        pappysite.save
 
 		    else
-		        puts "No Pappy :("
+		        STDOUT.write "No Pappy :(\n"
 		        pappysite.pappy = false
 		        pappysite.save
 		    end
 
 		    if inventory == pappysite.inventory
-		    	puts "No Changes"
+		    	STDOUT.write "No Changes\n"
 		        pappysite.inventory = inventory
 		        pappysite.save
 		    else
 		        pappysite.inventory = inventory
 		        pappysite.save
-		        puts "There's a change! There are now " + pappysite.inventory.to_s + " items listed"
+		        STDOUT.write "There's a change! There are now " + pappysite.inventory.to_s + " items listed\n"
 		    end
 
 	    else
-	    	puts "not running because it's not between 7am and 1pm"
+	    	STDOUT.write "not running because it's not between 7am and 1pm\n"
 	    end
 
 	end
