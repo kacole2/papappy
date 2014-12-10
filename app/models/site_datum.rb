@@ -209,7 +209,7 @@ class SiteDatum < ActiveRecord::Base
 							Watir::Wait.until { browser.title == "Fine Wine & Good Spirits: Order Confirmation" }
 							browser.link(:id => 'headerLoginAnchorId').click
 
-							STDOUT.write "Pappy Order for " + userlogin.to_s + " is submitted!\n"
+							STDOUT.write "Pappy Rye Order for " + userlogin.to_s + " is submitted!\n"
 
 							SMSEasy::Client.config['from_address'] = "PAPappy"
 							ordercomplete_text = SMSEasy::Client.new
