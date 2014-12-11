@@ -18,3 +18,15 @@ Things you need to know:
 * If deploying to Heroku, create environment variables where necessary. If deploying to Cloud Foundry, utilize the [Figaro Gem](https://github.com/laserlemon/figaro) to host all your environment variables.
 
 More information can be found on [Creating a worker process on kendrickcoleman.com](http://kendrickcoleman.com/index.php/Tech-Blog/creating-a-worker-process-on-cloud-foundry-with-clockwork.html)
+
+------------
+## How To Push to Cloud Foundry:
+	
+* Setup the database:
+  - 'cf create-service elephantsql turtle kcoleman-papappy-elephantsql'
+
+* Deploy the Web server using the manifest file that will seed the DB. all subsequent 'cf push' will require editing the manifest to remove the db:create db:migrate and db:seed commands:
+  - 'cf push papappy'
+
+* Deploy the Cron job:
+  - 'cf push papappycron -b https://github.com/ddollar/heroku-buildpack-multi.git --no-manifest --no-route'
