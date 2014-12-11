@@ -25,8 +25,5 @@ More information can be found on [Creating a worker process on kendrickcoleman.c
 * Setup the database:
   - `cf create-service elephantsql turtle kcoleman-papappy-elephantsql`
 
-* Deploy the Web server using the manifest file that will seed the DB. all subsequent 'cf push' will require editing the manifest to remove the db:create db:migrate and db:seed commands:
-  - `cf push papappy`
-
-* Deploy the Cron job:
-  - `cf push papappycron -b https://github.com/ddollar/heroku-buildpack-multi.git --no-manifest --no-route`
+* Deploy the application with the Web server and cron job using the manifest file that will seed the DB. all subsequent `cf push` will require editing the manifest to remove the db:create db:migrate and db:seed commands:
+  - `cf push`
