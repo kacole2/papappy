@@ -23,10 +23,10 @@ More information can be found on [Creating a worker process on kendrickcoleman.c
 ## How To Push to Cloud Foundry:
 	
 * Setup the database:
-  - 'cf create-service elephantsql turtle kcoleman-papappy-elephantsql'
+  - `cf create-service elephantsql turtle kcoleman-papappy-elephantsql`
 
 * Deploy the Web server using the manifest file that will seed the DB. all subsequent 'cf push' will require editing the manifest to remove the db:create db:migrate and db:seed commands:
-  - 'cf push papappy'
+  - `cf push papappy`
 
 * Deploy the Cron job:
-  - 'cf push papappycron -b https://github.com/ddollar/heroku-buildpack-multi.git --no-manifest --no-route'
+  - `cf push papappycron -b https://github.com/ddollar/heroku-buildpack-multi.git --no-manifest --no-route`
