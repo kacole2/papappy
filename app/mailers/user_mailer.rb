@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
-  default from: "kendrickcoleman@gmail.com"
+  default from: "PA Pappy"
 
   def pappy()
-    mail(:subject => "Pappy")
+    mail(:subject => "PA Pappy")
   end
 end
