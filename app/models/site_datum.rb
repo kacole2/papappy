@@ -22,7 +22,7 @@ class SiteDatum < ActiveRecord::Base
 			inventory = page.at('.tabSelected_blue').text.strip.tr('AvailableOnline)(','').to_i
 	    	
 	    	#The keywords to be searched on the page
-			pappyArray = ['Winkle', 'Pappy', 'Van', 'Beam']
+			pappyArray = ['Winkle', 'Pappy', 'Van']
 
 			#If one of those keywords is found, pappy variable will be true & save the search site to allbourbon
 			pappy = pappyArray.any? { |keyword| page.parser.css('.s_leftContainer').text.include? keyword }
@@ -84,7 +84,7 @@ class SiteDatum < ActiveRecord::Base
 								bourbon_list = mechanize.get('https' + searchsite)
 								bourbon_list_array = bourbon_list.search("//table[@id='productList']")
 								bourbon_list_array.each_with_index do |list_item, index|
-									if ["10849", "34155", "9532", "30591", "9530", "Pappy Van Winkle’s", "Van Winkle Special Reserve", "Winkle", "Beam"].any? { |keyword| list_item.content.include?  keyword }
+									if ["10849", "34155", "9532", "30591", "9530", "Pappy Van Winkle’s", "Van Winkle Special Reserve", "Winkle"].any? { |keyword| list_item.content.include?  keyword }
 										bourbon_form = bourbon_list.form_with(:name => 'OrderItemAddForma' + index.to_s)
 										bourbon_form.action = "OrderItemAdd"
 										results_page = bourbon_form.submit
