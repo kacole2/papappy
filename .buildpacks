@@ -1,2 +1,2 @@
-https://github.com/cloudfoundry/cf-buildpack-ruby
-https://github.com/stomita/heroku-buildpack-phantomjs
+https://github.com/cloudfoundry/buildpack-ruby.git
+https://github.com/stomita/heroku-buildpack-phantomjs.git
