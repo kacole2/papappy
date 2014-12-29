@@ -113,15 +113,15 @@ class SiteDatum < ActiveRecord::Base
 								browser.goto "https://www.finewineandgoodspirits.com/webapp/wcs/stores/servlet/OrderItemDisplay?langId=-1&storeId=10051&catalogId=10051&orderId=*"
 								Watir::Wait.until { browser.title == "Fine Wine & Good Spirits: Shopping cart" }
 								browser.link(:id => 'quickcheckOut').click
-
+								
 								#Submit the Order!!
-								Watir::Wait.until { browser.title == "Fine Wine & Good Spirits: Checkout Order Review" }
+								Watir::Wait.until(15) { browser.title == "Fine Wine & Good Spirits: Checkout Order Review" }
 								STDOUT.write "Successfully hit the Quick Checkout Button as " + userlogin.to_s + "\n"
 							rescue
 								vintages = ["23 Year Old", "20 Year Old", "15 Year Old", "12 Year Old", "10 Year Old", "13 Year Old"]
 								vintagetest = vintages.any? { |vintage| browser.span(:class => 'normalTextDarkRed').text.include? vintage}
 									if vintagetest == true
-										vintage.each do |vintage|
+										vintages.each do |vintage|
 											if browser.span(:class => 'normalTextDarkRed').text.include? vintage
 												clear_item_in_cart(browser, vintage, userlogin)
 											end
@@ -161,12 +161,8 @@ class SiteDatum < ActiveRecord::Base
 						end
 
 						def self.order_screwed(method, attempt, userlogin)
-							if i > 4
-								STDOUT.write "Tried " + method.to_s + "for the " + attempt.to_s + " time. Time to kill it for " + userlogin.to_s + " \n"
-								exit
-							else
-								STDOUT.write " " + method.to_s + " messed up! Retrying for the " + attempt.to_s + " again for " + userlogin.to_s + " \n"
-							end
+							STDOUT.write " " + method.to_s + " messed up! Retry attempt: " + attempt.to_s + " for " + userlogin.to_s + " \n"
+							sleep(3)
 						end
 
 						def self.order_liquor(userlogin, userpassword, userphone, carrier, winklesearch)
@@ -177,7 +173,7 @@ class SiteDatum < ActiveRecord::Base
 
 								#We need Watir to click on JS links :(
 								#This will only take a few second. We are running Headless with phantomjs
-								Watir.default_timeout = 180
+								Watir.default_timeout = 120
 								browser = Watir::Browser.new :phantomjs
 								textmessage = SMSEasy::Client.new
 

@@ -2,11 +2,11 @@ h1 {
   font-family: 'Fondamento', cursive;
   text-align: center;
   font-size: 3.5em;
-  margin: 5%;
+  line-height: 28px;
 }
 
 body {
-  margin-top: 5%;
+
   background-color: #ffefd1;
   color: #333;
   font-size: 13px;
@@ -17,7 +17,7 @@ p, ol, ul, td {
   font-family: 'Fondamento', cursive;
   text-align: center;
   font-size: 2em;
-  line-height: 18px;
+  line-height: 28px;
   margin: 0;
 }
 
@@ -34,7 +34,7 @@ p, ol, ul, td {
 }
 
 #content-wrapper {
-  padding: 25px 1% 50px;
+  padding: 15px 1% 30px;
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
@@ -52,11 +52,18 @@ p, ol, ul, td {
   margin: 2.5%;
 }
 
+.center {
+  display: inline-block;
+  width: 100%;
+  float: center;
+}
+
 img {
     display: block;
-    margin-top: -10%;
     margin-left: auto;
-    margin-right: auto }
+    margin-right: auto;
+    margin-top: -2%;
+}
 
 pre {
   background-color: #eee;

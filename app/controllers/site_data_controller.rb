@@ -22,6 +22,15 @@ class SiteDataController < ApplicationController
   def edit
   end
 
+  def resetitem
+    entry = SiteDatum.find(params[:id])
+    entry.textsent = false
+    entry.ordersubmitted = false
+    entry.pappy = false
+    entry.save
+    redirect_to :back
+  end
+
   #NO MORE NEW ONES
   # POST /site_data
   # POST /site_data.json

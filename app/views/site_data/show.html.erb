@@ -2,14 +2,22 @@
 <div id="#content-wrapper">
 
 <h1>PA Pappy Scraper</h1>
-
 	<div class="left">
-		<p><strong>Current Online Inventory: <%= @site_datum.inventory %></strong></p>
+		<p><strong>Is There Pappy: <%= @site_datum.pappy %></strong></p>
+		<br>
+		<p><strong>Text Sent: <%= @site_datum.textsent %></strong></p>
 	</div>
 	<div class="right">
-		<p><strong>Is There Pappy: <%= @site_datum.pappy %></strong></p>
+		<p><strong>Order Sent: <%= @site_datum.ordersubmitted %></strong></p>
+		<br>
+		<p><strong>Updated: <%= @site_datum.updated_at.strftime("%Y/%m/%d/ at %I:%M:%S%P %Z") %></strong></p>
 	</div>
-	<img src="http://oldripvanwinkle.com/wp-content/uploads/2011/10/23ylabel1.jpg">
-	<p class="name">by kendrick coleman (<a href="https://twitter.com/KendrickColeman">t: @kendrickcoleman </a>)
+	<div class="center">
+		<img src="http://oldripvanwinkle.com/wp-content/uploads/2011/10/23ylabel1.jpg">
+		<p class="name">by kendrick coleman (<a href="https://twitter.com/KendrickColeman">t: @kendrickcoleman </a>)
+		<br>
+		<br>
+		<%= link_to "Reset Order to False", resetitem_path(@site_datum), class: "btn", :method => :post %>
+	</div>
 </div>
 

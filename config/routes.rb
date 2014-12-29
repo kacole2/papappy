@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
 
    root :to => "site_data#show", :id => '1'
+   post 'site_data/:id/resetitem' => 'site_data#resetitem', as: :resetitem
    #post 'site_data/runScrape' => 'site_data#runScrape', as: :runScrape
    #match '/', to: "site_data#show", id: '1', via: 'get', as: :home
 
