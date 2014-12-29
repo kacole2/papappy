@@ -23,6 +23,7 @@ class SiteDatum < ActiveRecord::Base
 		    if pappy == true
 		        STDOUT.write "There's PAPPY!\n"
 		        pappysite.pappy = true
+		        pappysite.touch
 		        pappysite.save
 
 					Thread.new{
@@ -203,6 +204,7 @@ class SiteDatum < ActiveRecord::Base
 		    else
 		        STDOUT.write "No Pappy :(\n"
 		        pappysite.pappy = false
+		        pappysite.touch
 		        pappysite.save
 		    end
 

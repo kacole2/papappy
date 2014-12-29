@@ -27,6 +27,7 @@ class SiteDataController < ApplicationController
     entry.textsent = false
     entry.ordersubmitted = false
     entry.pappy = false
+    entry.touch
     entry.save
     redirect_to :back
   end

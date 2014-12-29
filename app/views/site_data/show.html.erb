@@ -10,7 +10,7 @@
 	<div class="right">
 		<p><strong>Order Sent: <%= @site_datum.ordersubmitted %></strong></p>
 		<br>
-		<p><strong>Updated: <%= @site_datum.updated_at.strftime("%Y/%m/%d/ at %I:%M:%S%P %Z") %></strong></p>
+		<p><strong>Last Run: <%= @site_datum.updated_at.in_time_zone("Eastern Time (US & Canada)").strftime("%Y/%m/%d at %I:%M:%S%P EST") %></strong></p>
 	</div>
 	<div class="center">
 		<img src="http://oldripvanwinkle.com/wp-content/uploads/2011/10/23ylabel1.jpg">
